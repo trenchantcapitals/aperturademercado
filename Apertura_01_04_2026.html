@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📈 Apertura del Mercado | 1 Abril 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d0d12;
+            --card: #16161d;
+            --border: #26262f;
+            --red: #ef4444;
+            --green: #22c55e;
+            --gold: #f59e0b;
+            --blue: #3b82f6;
+            --purple: #a855f7;
+            --text: #ffffff;
+            --text2: #a1a1aa;
+            --text3: #71717a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 24px 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(34, 197, 94, 0.15);
+            border: 1px solid var(--green);
+            color: var(--green);
+            font-size: 11px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .badge.red {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid var(--red);
+            color: var(--red);
+        }
+
+        .badge.gold {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid var(--gold);
+            color: var(--gold);
+        }
+
+        h1 { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+        .date { color: var(--text2); font-size: 14px; }
+        .section { margin-bottom: 24px; }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+
+        .index-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+        .index-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            text-align: center;
+        }
+
+        .index-name { font-size: 11px; color: var(--text2); margin-bottom: 6px; }
+        .index-val { font-size: 16px; font-weight: 700; font-family: 'JetBrains Mono', monospace; margin-bottom: 4px; }
+        .index-chg { font-size: 12px; font-weight: 600; }
+
+        .red { color: var(--red); }
+        .green { color: var(--green); }
+        .gold { color: var(--gold); }
+        .blue { color: var(--blue); }
+        .purple { color: var(--purple); }
+
+        .watchlist { display: flex; flex-direction: column; gap: 8px; }
+
+        .stock-row {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 12px 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stock-left { display: flex; flex-direction: column; gap: 2px; }
+        .stock-symbol { font-size: 15px; font-weight: 700; color: var(--text); }
+        .stock-name { font-size: 11px; color: var(--text3); }
+        .stock-right { text-align: right; }
+        .stock-price { font-size: 15px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+
+        .stock-change {
+            font-size: 12px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+
+        .stock-change.up { background: var(--green); color: #000; }
+        .stock-change.down { background: var(--red); color: #fff; }
+
+        .comm-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+
+        .comm-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .comm-icon { font-size: 24px; }
+        .comm-info { flex: 1; }
+        .comm-name { font-size: 11px; color: var(--text3); text-transform: uppercase; }
+        .comm-price { font-size: 16px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+        .comm-chg { font-size: 12px; font-weight: 600; }
+
+        .alert {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.1));
+            border: 1px solid var(--gold);
+            border-radius: 12px;
+            padding: 16px;
+        }
+
+        .alert.green-alert {
+            background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(59, 130, 246, 0.1));
+            border: 1px solid var(--green);
+        }
+
+        .alert.red-alert {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.05));
+            border: 1px solid var(--red);
+        }
+
+        .alert-title { font-size: 14px; font-weight: 700; color: var(--gold); margin-bottom: 8px; }
+        .alert.green-alert .alert-title { color: var(--green); }
+        .alert.red-alert .alert-title { color: var(--red); }
+        .alert-text { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+        .news-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .news-card:hover {
+            border-color: var(--blue);
+        }
+
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .news-ticker { font-size: 11px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+        .news-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+        .news-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+
+        .news-detail {
+            display: none;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .news-card.expanded .news-detail {
+            display: block;
+        }
+
+        .news-arrow {
+            font-size: 12px;
+            color: var(--text3);
+            transition: transform 0.2s;
+        }
+
+        .news-card.expanded .news-arrow {
+            transform: rotate(180deg);
+        }
+
+        .news-impact {
+            margin-top: 10px;
+            font-size: 12px;
+            padding: 6px 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        .news-impact.positive { background: rgba(34, 197, 94, 0.15); color: var(--green); }
+        .news-impact.negative { background: rgba(239, 68, 68, 0.15); color: var(--red); }
+        .news-impact.neutral { background: rgba(245, 158, 11, 0.15); color: var(--gold); }
+
+        .point { display: flex; gap: 10px; margin-bottom: 12px; }
+
+        .point-icon {
+            width: 24px; height: 24px;
+            background: var(--card);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            flex-shrink: 0;
+        }
+
+        .point-text { font-size: 13px; color: var(--text2); line-height: 1.5; }
+        .point-text strong { color: var(--text); }
+
+        .quick-stat {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: var(--card);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .qs-label { font-size: 13px; color: var(--text2); }
+        .qs-val { font-size: 13px; font-weight: 600; font-family: 'JetBrains Mono', monospace; }
+
+        .cal-item {
+            background: var(--card);
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+        }
+
+        .cal-day { font-size: 11px; color: var(--text3); text-transform: uppercase; margin-bottom: 4px; }
+        .cal-event { font-size: 13px; color: var(--text); }
+
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text3);
+            padding: 20px 0;
+            border-top: 1px solid var(--border);
+            margin-top: 20px;
+        }
+
+        .context-box {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(34, 197, 94, 0.1));
+            border: 1px solid var(--blue);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .context-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--blue);
+            margin-bottom: 8px;
+        }
+
+        .expand-hint {
+            font-size: 11px;
+            color: var(--text3);
+            text-align: center;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="badge">📈 MERCADOS EN VERDE</div>
+        <h1>Apertura de Bolsa</h1>
+        <div class="date">Miércoles, 1 de Abril 2026 • Q2 Comienza</div>
+    </header>
+
+    <!-- CONTEXTO DEL DÍA -->
+    <section class="section">
+        <div class="context-box">
+            <div class="context-title">💡 ¿Por qué amanecemos en verde?</div>
+            <div class="alert-text">
+                Los mercados extienden el <strong>rally de ayer (+2.9% S&P)</strong> impulsados por expectativas de que el conflicto en Irán podría terminar en <strong>2-3 semanas</strong> según Trump. El petróleo bajó brevemente de $100/barril. Es el mejor día desde mayo 2025.
+            </div>
+        </div>
+    </section>
+
+    <!-- ÍNDICES -->
+    <section class="section">
+        <div class="section-title">📊 Índices Principales</div>
+        <div class="index-grid">
+            <div class="index-box">
+                <div class="index-name">DOW JONES</div>
+                <div class="index-val">46,715.16</div>
+                <div class="index-chg green">+0.29%</div>
+            </div>
+            <div class="index-box">
+                <div class="index-name">NASDAQ</div>
+                <div class="index-val">21,751.84</div>
+                <div class="index-chg green">+0.75%</div>
+            </div>
+            <div class="index-box">
+                <div class="index-name">S&P 500</div>
+                <div class="index-val">6,567.64</div>
+                <div class="index-chg green">+0.02%</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ALERTA GEOPOLÍTICA -->
+    <section class="section">
+        <div class="alert red-alert">
+            <div class="alert-title">⚠️ ALERTA: Irán amenaza empresas tech de EE.UU.</div>
+            <div class="alert-text">
+                La Guardia Revolucionaria Iraní amenazó con atacar <strong>18 empresas tech</strong> (NVDA, AAPL, MSFT, GOOGL, META, TSLA, INTC, ORCL, BA) en retaliación por ataques de EE.UU.<br><br>
+                <strong style="color: var(--red);">⏰ Hora límite: 8pm Teherán (12:30pm EDT) — HOY</strong><br>
+                Empleados fueron advertidos de evacuar instalaciones en Medio Oriente.
+            </div>
+        </div>
+    </section>
+
+    <!-- MI WATCHLIST -->
+    <section class="section">
+        <div class="section-title">📱 Tu Watchlist — Stock Tracker</div>
+        <div class="watchlist">
+            <div class="stock-row">
+                <div class="stock-left">
+                    <div class="stock-symbol">HIMS</div>
+                    <div class="stock-name">Hims & Hers Health</div>
+                </div>
+                <div class="stock-right">
+                    <div class="stock-price">$21.29</div>
+                    <div class="stock-change up">+2.55%</div>
+                </div>
+            </div>
+            <div class="stock-row">
+                <div class="stock-left">
+                    <div class="stock-symbol">ASML</div>
+                    <div class="stock-name">ASML Holding NV</div>
+                </div>
+                <div class="stock-right">
+                    <div class="stock-price">$1,352.27</div>
+                    <div class="stock-change up">+2.38%</div>
+                </div>
+            </div>
+            <div class="stock-row">
+                <div class="stock-left">
+                    <div class="stock-symbol">MU</div>
+                    <div class="stock-name">Micron Technology</div>
+                </div>
+                <div class="stock-right">
+                    <div class="stock-price">$344.91</div>
+                    <div class="stock-change up">+2.09%</div>
+                </div>
+            </div>
+            <div class="stock-row">
+                <div class="stock-left">
+                    <div class="stock-symbol">ARM</div>
+                    <div class="stock-name">Arm Holdings</div>
+                </div>
+                <div class="stock-right">
+                    <div class="stock-price">$153.86</div>
+                    <div class="stock-change up">+1.71%</div>
+                </div>
+            </div>
+            <div class="stock-row">
+                <div class="stock-left">
+                    <div class="stock-symbol">TSLA</div>
+                    <div class="stock-name">Tesla Inc</div>
+                </div>
+                <div class="stock-right">
+                    <div class="stock-price">$377.09</div>
+                    <div class="stock-change up">+1.44%</div>
+                </div>
+            </div>
+            <div class="stock-row">
+                <div class="stock-left">
+                    <div class="stock-symbol">AVGO</div>
+                    <div class="stock-name">Broadcom Inc</div>
+                </div>
+                <div class="stock-right">
+                    <div class="stock-price">$312.70</div>
+                    <div class="stock-change up">+1.03%</div>
+                </div>
+            </div>
+            <div class="stock-row">
+                <div class="stock-left">
+                    <div class="stock-symbol">NOW</div>
+                    <div class="stock-name">ServiceNow Inc</div>
+                </div>
+                <div class="stock-right">
+                    <div class="stock-price">$105.55</div>
+                    <div class="stock-change up">+0.96%</div>
+                </div>
+            </div>
+            <div class="stock-row">
+                <div class="stock-left">
+                    <div class="stock-symbol">META</div>
+                    <div class="stock-name">Meta Platforms</div>
+                </div>
+                <div class="stock-right">
+                    <div class="stock-price">$577.02</div>
+                    <div class="stock-change up">+0.85%</div>
+                </div>
+            </div>
+            <div class="stock-row">
+                <div class="stock-left">
+                    <div class="stock-symbol">NVDA</div>
+                    <div class="stock-name">NVIDIA Corp</div>
+                </div>
+                <div class="stock-right">
+                    <div class="stock-price">$179.78</div>
+                    <div class="stock-change up">+1.07%</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- COMMODITIES -->
+    <section class="section">
+        <div class="section-title">🛢️ Commodities & Cripto</div>
+        <div class="comm-grid">
+            <div class="comm-box">
+                <div class="comm-icon">🛢️</div>
+                <div class="comm-info">
+                    <div class="comm-name">WTI</div>
+                    <div class="comm-price">$100.19</div>
+                </div>
+                <div class="comm-chg red">-1.17%</div>
+            </div>
+            <div class="comm-box">
+                <div class="comm-icon">🥇</div>
+                <div class="comm-info">
+                    <div class="comm-name">Oro</div>
+                    <div class="comm-price">$4,755.40</div>
+                </div>
+                <div class="comm-chg green">+1.64%</div>
+            </div>
+            <div class="comm-box">
+                <div class="comm-icon">₿</div>
+                <div class="comm-info">
+                    <div class="comm-name">Bitcoin</div>
+                    <div class="comm-price">$66,554</div>
+                </div>
+                <div class="comm-chg red">-0.3%</div>
+            </div>
+            <div class="comm-box">
+                <div class="comm-icon">⛽</div>
+                <div class="comm-info">
+                    <div class="comm-name">Gas EE.UU.</div>
+                    <div class="comm-price">$4.00+</div>
+                </div>
+                <div class="comm-chg gold">récord</div>
+            </div>
+        </div>
+        <div style="margin-top: 12px;" class="alert green-alert">
+            <div class="alert-title">📉 Petróleo baja por esperanzas de paz</div>
+            <div class="alert-text">
+                Brent bajó brevemente de $100/barril por primera vez en semanas. <strong>Si hay acuerdo de paz, se espera caída significativa en precios de energía.</strong>
+            </div>
+        </div>
+    </section>
+
+    <!-- NOTICIAS HOY -->
+    <section class="section">
+        <div class="section-title">📰 Noticias HOY (1 Abril) — Click para expandir</div>
+
+        <div class="news-card" onclick="toggleNews(this)">
+            <div class="news-header">
+                <div>
+                    <div class="news-ticker">LLY + CNTA • Eli Lilly & Centessa</div>
+                    <div class="news-title">💊 Eli Lilly compra Centessa por $7.8B</div>
+                </div>
+                <span class="news-arrow">▼</span>
+            </div>
+            <div class="news-detail">
+                <div class="news-desc">Lilly adquiere Centessa Pharmaceuticals para expandirse en tratamientos de <strong>narcolepsia</strong>. Paga <strong>$38/acción upfront + hasta $9 en milestones</strong> por aprobaciones FDA. Mercado potencial: $15-20B.</div>
+                <div class="news-impact positive">📈 CNTA +44% | LLY +4%</div>
+            </div>
+        </div>
+
+        <div class="news-card" onclick="toggleNews(this)">
+            <div class="news-header">
+                <div>
+                    <div class="news-ticker">ORCL • Oracle</div>
+                    <div class="news-title">🔴 Oracle despide hasta 30,000 empleados</div>
+                </div>
+                <span class="news-arrow">▼</span>
+            </div>
+            <div class="news-detail">
+                <div class="news-desc">Los mayores despidos en la historia de Oracle (~18% workforce) para financiar expansión en infraestructura de IA. <strong>India pierde 12,000 puestos.</strong> Wall Street premia la reestructuración. Severance: N+2 meses.</div>
+                <div class="news-impact positive">📈 ORCL +5-6% — Mercado aprueba</div>
+            </div>
+        </div>
+
+        <div class="news-card" onclick="toggleNews(this)">
+            <div class="news-header">
+                <div>
+                    <div class="news-ticker">SPACEX • IPO</div>
+                    <div class="news-title">🚀 SpaceX contrata 21 bancos para mega IPO</div>
+                </div>
+                <span class="news-arrow">▼</span>
+            </div>
+            <div class="news-detail">
+                <div class="news-desc">El <strong>IPO más grande de la historia</strong> se prepara para junio 2026. Valoración esperada: <strong>$1.75 TRILLONES</strong>. Código interno: "Project Apex". Bancos líderes: Morgan Stanley, Goldman Sachs, JPMorgan, BofA, Citi.</div>
+                <div class="news-impact neutral">🔥 30% de acciones para retail (vs 10% típico)</div>
+            </div>
+        </div>
+
+        <div class="news-card" onclick="toggleNews(this)">
+            <div class="news-header">
+                <div>
+                    <div class="news-ticker">META • Meta Platforms</div>
+                    <div class="news-title">👓 Meta lanza gafas Ray-Ban con receta</div>
+                </div>
+                <span class="news-arrow">▼</span>
+            </div>
+            <div class="news-detail">
+                <div class="news-desc">Nuevos modelos <strong>Blayzer y Scriber</strong> desde $499. Diseñados para usuarios con lentes correctivos. Incluyen IA para tracking nutricional automático. Disponibles <strong>14 de abril</strong>.</div>
+                <div class="news-impact positive">📈 META +6.7% ayer</div>
+            </div>
+        </div>
+
+        <div class="news-card" onclick="toggleNews(this)">
+            <div class="news-header">
+                <div>
+                    <div class="news-ticker">SONY + TCL • Joint Venture</div>
+                    <div class="news-title">📺 TCL compra 51% de Sony TV (Bravia)</div>
+                </div>
+                <span class="news-arrow">▼</span>
+            </div>
+            <div class="news-detail">
+                <div class="news-desc">TCL paga <strong>$473M</strong> por participación mayoritaria. Se crea "Bravia Inc." que operará desde abril 2027. Sony mantiene 49%. <strong>Fin de una era japonesa en TVs premium.</strong></div>
+                <div class="news-impact positive">📈 SONY +4% ayer | TCL +16%</div>
+            </div>
+        </div>
+
+        <div class="news-card" onclick="toggleNews(this)">
+            <div class="news-header">
+                <div>
+                    <div class="news-ticker">NKE • Nike</div>
+                    <div class="news-title">👟 Nike advierte caída de ventas hasta 2026</div>
+                </div>
+                <span class="news-arrow">▼</span>
+            </div>
+            <div class="news-detail">
+                <div class="news-desc">Proyecta caída de ventas de un dígito bajo, con <strong>China cayendo 20%</strong> este trimestre. Demanda débil y retos de turnaround continúan. Downgrades de JPMorgan, BofA y Goldman.</div>
+                <div class="news-impact negative">📉 NKE -11% premarket</div>
+            </div>
+        </div>
+
+        <div class="news-card" onclick="toggleNews(this)">
+            <div class="news-header">
+                <div>
+                    <div class="news-ticker">JILL • J.Jill</div>
+                    <div class="news-title">👗 J.Jill guía ventas débiles, cita tarifas</div>
+                </div>
+                <span class="news-arrow">▼</span>
+            </div>
+            <div class="news-detail">
+                <div class="news-desc">Reportó pérdida en Q4 y proyecta ventas comparables <strong>-1% a -3%</strong> en 2026. Culpa a tarifas e inventario cauteloso.</div>
+                <div class="news-impact negative">📉 JILL -23%</div>
+            </div>
+        </div>
+
+        <div class="news-card" onclick="toggleNews(this)">
+            <div class="news-header">
+                <div>
+                    <div class="news-ticker">OPEN • Opendoor</div>
+                    <div class="news-title">🏠 Opendoor compra unidad de Doma</div>
+                </div>
+                <span class="news-arrow">▼</span>
+            </div>
+            <div class="news-detail">
+                <div class="news-desc">Adquiere negocio de closing y escrow de Doma para reducir costos de refinanciamiento hipotecario usando automatización.</div>
+                <div class="news-impact positive">📈 OPEN +5.6% ayer, +1% premarket</div>
+            </div>
+        </div>
+
+        <div class="news-card" onclick="toggleNews(this)">
+            <div class="news-header">
+                <div>
+                    <div class="news-ticker">ANTHROPIC • AI</div>
+                    <div class="news-title">🤖 Anthropic filtra código de Claude Code</div>
+                </div>
+                <span class="news-arrow">▼</span>
+            </div>
+            <div class="news-detail">
+                <div class="news-desc">Error humano expuso <strong>500,000+ líneas de código fuente</strong> de su herramienta de IA para programadores. Segunda filtración en una semana. Competidores obtienen "blueprint" de arquitectura de agentes de IA.</div>
+                <div class="news-impact neutral">⚠️ Preocupaciones de seguridad</div>
+            </div>
+        </div>
+
+        <div class="news-card" onclick="toggleNews(this)">
+            <div class="news-header">
+                <div>
+                    <div class="news-ticker">DEFT • DeFi Technologies</div>
+                    <div class="news-title">💰 DeFi Technologies dispara +39% premarket</div>
+                </div>
+                <span class="news-arrow">▼</span>
+            </div>
+            <div class="news-detail">
+                <div class="news-desc">Reportó ingresos FY2025 de <strong>$99.1M (+215%)</strong> y ganancias de $62.7M, pese a miss en Q4 y retraso en filing anual.</div>
+                <div class="news-impact positive">📈 DEFT +39%</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SESIÓN AYER -->
+    <section class="section">
+        <div class="section-title">📅 Rally de Ayer (Martes 31)</div>
+        <div class="quick-stat">
+            <span class="qs-label">S&P 500</span>
+            <span class="qs-val green">+2.9% — Mejor día desde Mayo 2025</span>
+        </div>
+        <div class="quick-stat">
+            <span class="qs-label">Nasdaq</span>
+            <span class="qs-val green">+3.8%</span>
+        </div>
+        <div class="quick-stat">
+            <span class="qs-label">Dow Jones</span>
+            <span class="qs-val green">+1,125 puntos</span>
+        </div>
+        <div class="quick-stat">
+            <span class="qs-label">Razón</span>
+            <span class="qs-val blue">Esperanzas fin de guerra Irán</span>
+        </div>
+    </section>
+
+    <!-- DATOS HOY -->
+    <section class="section">
+        <div class="section-title">📊 Datos Económicos HOY</div>
+        <div class="cal-item">
+            <div class="cal-day">🕙 10:00 AM ET</div>
+            <div class="cal-event"><strong>ISM Manufacturing PMI</strong> (Marzo)</div>
+        </div>
+        <div class="cal-item">
+            <div class="cal-day">🕙 8:15 AM ET</div>
+            <div class="cal-event"><strong>ADP Empleo</strong> — Resultado: +62,000 (vs 39,000 esperado) ✅</div>
+        </div>
+        <div class="cal-item">
+            <div class="cal-day">🕙 10:30 AM ET</div>
+            <div class="cal-event"><strong>Inventarios de Petróleo</strong></div>
+        </div>
+        <div class="cal-item">
+            <div class="cal-day">🔔 Earnings</div>
+            <div class="cal-event"><strong>ConAgra (CAG)</strong> — EPS esperado $0.40</div>
+        </div>
+    </section>
+
+    <!-- RESTO SEMANA -->
+    <section class="section">
+        <div class="section-title">📆 Resto de la Semana</div>
+        <div class="alert" style="margin-bottom: 16px;">
+            <div class="alert-title">⚠️ Viernes Santo — Mercado CERRADO</div>
+            <div class="alert-text">Viernes salen datos de empleo (Non-Farm Payrolls) pero mercados cerrados por Good Friday.</div>
+        </div>
+        <div class="cal-item">
+            <div class="cal-day">📅 JUEVES 2 ABR</div>
+            <div class="cal-event">Factory Orders + Jobless Claims</div>
+        </div>
+        <div class="cal-item">
+            <div class="cal-day">📅 VIERNES 3</div>
+            <div class="cal-event">Non-Farm Payrolls | <strong style="color: var(--red);">CERRADO</strong></div>
+        </div>
+        <div class="cal-item">
+            <div class="cal-day">⚠️ DEADLINE</div>
+            <div class="cal-event" style="color: var(--red);"><strong>6 ABRIL — Ultimátum de Trump a Irán</strong></div>
+        </div>
+    </section>
+
+    <!-- OUTLOOK -->
+    <section class="section">
+        <div class="section-title">🎯 Qué Esperar</div>
+        <div class="quick-stat">
+            <span class="qs-label">Tendencia</span>
+            <span class="qs-val green">ALCISTA (corto plazo)</span>
+        </div>
+        <div class="quick-stat">
+            <span class="qs-label">Driver Principal</span>
+            <span class="qs-val gold">IRÁN / PETRÓLEO</span>
+        </div>
+        <div class="quick-stat">
+            <span class="qs-label">Deadline Irán</span>
+            <span class="qs-val red">6 ABRIL</span>
+        </div>
+        <div class="quick-stat">
+            <span class="qs-label">Oro</span>
+            <span class="qs-val green">RÉCORD HISTÓRICO $4,755</span>
+        </div>
+
+        <div class="alert green-alert" style="margin-top: 16px;">
+            <div class="alert-title">💡 Perspectiva</div>
+            <div class="alert-text">
+                El mercado reacciona muy positivo a señales de fin de guerra. <strong>Si hay acuerdo: rally continuará.</strong> Si no hay acuerdo para el 6 de abril, Trump amenazó con "obliterar" sector energético de Irán. La volatilidad seguirá alta pero abril históricamente es el <strong>2do mejor mes del año</strong> (+1.6% promedio, 68% frecuencia positiva).
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        Fuentes: Stock Tracker, Yahoo Finance, Investing.com, Stock Analysis, CNBC, Reuters, Bloomberg, WSJ, BBC<br>
+        1 Abril 2026 • Apertura de Mercado • Solo fines informativos
+    </footer>
+
+    <script>
+        function toggleNews(card) {
+            card.classList.toggle('expanded');
+        }
+
+        // Auto-expand first news item
+        document.addEventListener('DOMContentLoaded', function() {
+            const firstCard = document.querySelector('.news-card');
+            if (firstCard) {
+                firstCard.classList.add('expanded');
+            }
+        });
+    </script>
+
+</body>
+</html>
